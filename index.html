@@ -1151,14 +1151,13 @@
     <h2 class="section-title" data-text="SOUNDBOARD"><span>SOUNDBOARD</span></h2>
     <p style="margin-bottom:2rem; opacity:0.8; font-size:1.1rem;">Premi i bottoni. Immagina il suono. È più potente così.</p>
     <div class="sound-grid">
-      <button class="sound-btn" onclick="playSound(this)"><span>🐊 BOMBARDIRO</span></button>
-      <button class="sound-btn" onclick="playSound(this)"><span>🐟 TRALALERO</span></button>
-      <button class="sound-btn" onclick="playSound(this)"><span>🦏 PATAPIM</span></button>
-      <button class="sound-btn" onclick="playSound(this)"><span>🥁 TUNG TUNG</span></button>
-      <button class="sound-btn" onclick="playSound(this)"><span>☕ CAPPUCCINO</span></button>
-      <button class="sound-btn" onclick="playSound(this)"><span>🦒 LIRILÌ</span></button>
-      <button class="sound-btn" onclick="playSound(this)"><span>❓ ???</span></button>
-      <button class="sound-btn" onclick="playSound(this)"><span>🌀 CHAOS MODE</span></button>
+      <button class="sound-btn" onclick="playSound(this,'bombardiro')"><span>🐊 BOMBARDIRO</span></button>
+      <button class="sound-btn" onclick="playSound(this,'tralalero')"><span>🐟 TRALALERO</span></button>
+      <button class="sound-btn" onclick="playSound(this,'patapim')"><span>🦏 PATAPIM</span></button>
+      <button class="sound-btn" onclick="playSound(this,'tungtung')"><span>🥁 TUNG TUNG</span></button>
+      <button class="sound-btn" onclick="playSound(this,'cappuccino')"><span>☕ CAPPUCCINO</span></button>
+      <button class="sound-btn" onclick="playSound(this,'lirili')"><span>🦒 LIRILÌ</span></button>
+      <button class="sound-btn" onclick="playSound(this,null)"><span>🌀 CHAOS MODE</span></button>
     </div>
   </section>
 
@@ -1225,8 +1224,19 @@
     }, { threshold: 0.15 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // === SOUND BOARD (visual feedback) ===
-    function playSound(btn) {
+    // === SOUND BOARD ===
+    const soundMap = {
+      'bombardiro': 'bombardiro.mp3',
+      'tralalero':  'tralalero.mp3',
+      'patapim':    'patapim.mp3',
+      'tungtung':   'tungtung.mp3',
+      'cappuccino': 'cappuccino.mp3',
+      'lirili':     'lirili.mp3',
+    };
+    let currentAudio = null;
+
+    function playSound(btn, key) {
+      // Visual feedback
       btn.style.transform = 'scale(0.9)';
       btn.style.background = '#ffea00';
       btn.style.color = '#0a0a0a';
@@ -1235,7 +1245,8 @@
         btn.style.background = '';
         btn.style.color = '';
       }, 300);
-      // Spawn an emoji burst
+
+      // Emoji burst
       const emojiBurst = ['💥','⚡','🎵','✨','🌀','🔥'];
       const burst = document.createElement('span');
       burst.textContent = emojiBurst[Math.floor(Math.random() * emojiBurst.length)];
@@ -1250,6 +1261,12 @@
       `;
       document.body.appendChild(burst);
       setTimeout(() => burst.remove(), 800);
+
+      // Audio
+      if (!key || !soundMap[key]) return;
+      if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; }
+      currentAudio = new Audio(soundMap[key]);
+      currentAudio.play().catch(() => {});
     }
 
     // Add burst keyframe dynamically
