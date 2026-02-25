@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>$ITALIANROT — Il Portale del Caos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Boogaloo&family=Fredoka+One&family=Permanent+Marker&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --verde: #00e676;
+      --rosso: #ff1744;
+      --giallo: #ffea00;
+      --blu: #2979ff;
+      --bianco: #fffde7;
+      --nero: #0a0a0a;
+      --arancione: #ff6d00;
+      --viola: #d500f9;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--nero);
+      color: var(--bianco);
+      font-family: 'Boogaloo', cursive;
+      overflow-x: hidden;
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='8' fill='%23ffea00' stroke='%23ff1744' stroke-width='3'/%3E%3C/svg%3E") 16 16, auto;
+    }
+
+    /* === NOISE OVERLAY === */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.5;
+    }
+
+    /* === HERO === */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      background: radial-gradient(ellipse at 20% 50%, #1a0033 0%, transparent 60%),
+                  radial-gradient(ellipse at 80% 20%, #001a00 0%, transparent 60%),
+                  radial-gradient(ellipse at 50% 80%, #330000 0%, transparent 60%),
+                  var(--nero);
+      text-align: center;
+      padding: 2rem;
+    }
+
+    /* Animated stripes background */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 60px,
+        rgba(255,234,0,0.03) 60px,
+        rgba(255,234,0,0.03) 62px
+      );
+      animation: stripMove 8s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes stripMove {
+      0% { background-position: 0 0; }
+      100% { background-position: 88px 88px; }
+    }
+
+    .flag-bar {
+      width: 100%;
+      height: 10px;
+      background: linear-gradient(to right,
+        var(--verde) 0%, var(--verde) 33.3%,
+        white 33.3%, white 66.6%,
+        var(--rosso) 66.6%, var(--rosso) 100%
+      );
+      position: fixed;
+      top: 0;
+      z-index: 1000;
+      animation: flagPulse 2s ease-in-out infinite;
+    }
+    @keyframes flagPulse {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.4) saturate(1.5); }
+    }
+
+    .hero-badge {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(0.7rem, 2vw, 1rem);
+      letter-spacing: 0.4em;
+      color: var(--giallo);
+      text-transform: uppercase;
+      border: 2px solid var(--giallo);
+      padding: 0.3em 1.2em;
+      margin-bottom: 1.5rem;
+      animation: badgeBlink 3s ease-in-out infinite;
+      position: relative;
+      z-index: 2;
+    }
+    @keyframes badgeBlink {
+      0%, 90%, 100% { opacity: 1; }
+      95% { opacity: 0.3; }
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 18vw, 16rem);
+      line-height: 0.85;
+      position: relative;
+      z-index: 2;
+      animation: titleEntrance 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    }
+    .hero-title .italian {
+      color: var(--giallo);
+      display: block;
+      -webkit-text-stroke: 3px var(--rosso);
+      text-shadow:
+        6px 6px 0 var(--rosso),
+        12px 12px 0 rgba(255,23,68,0.3);
+      animation: glitch1 4s infinite;
+    }
+    .hero-title .brainrot {
+      color: var(--verde);
+      display: block;
+      -webkit-text-stroke: 3px var(--blu);
+      text-shadow:
+        6px 6px 0 var(--blu),
+        12px 12px 0 rgba(41,121,255,0.3);
+      animation: glitch2 4s infinite 0.5s;
+    }
+
+    @keyframes titleEntrance {
+      from { transform: scale(0.5) rotate(-5deg); opacity: 0; }
+      to { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+
+    @keyframes glitch1 {
+      0%, 92%, 100% { transform: translate(0); }
+      94% { transform: translate(-4px, 2px); filter: hue-rotate(30deg); }
+      96% { transform: translate(4px, -2px); filter: hue-rotate(-30deg); }
+      98% { transform: translate(-2px, 0); }
+    }
+    @keyframes glitch2 {
+      0%, 88%, 100% { transform: translate(0); }
+      90% { transform: translate(5px, -3px); filter: hue-rotate(60deg); }
+      93% { transform: translate(-3px, 2px); filter: hue-rotate(-60deg); }
+      96% { transform: translate(1px, 0); }
+    }
+
+    .hero-sub {
+      font-family: 'Permanent Marker', cursive;
+      font-size: clamp(1rem, 3vw, 2rem);
+      color: var(--arancione);
+      margin-top: 1.5rem;
+      position: relative;
+      z-index: 2;
+      transform: rotate(-2deg);
+      text-shadow: 3px 3px 0 rgba(0,0,0,0.5);
+    }
+
+    .hero-scroll {
+      margin-top: 3rem;
+      font-size: 2rem;
+      animation: bounce 1s infinite;
+      position: relative;
+      z-index: 2;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(10px); }
+    }
+
+    /* Floating emoji decorations */
+    .floater {
+      position: absolute;
+      font-size: 3rem;
+      pointer-events: none;
+      animation: float linear infinite;
+      opacity: 0.6;
+      z-index: 1;
+    }
+    @keyframes float {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.6; }
+      90% { opacity: 0.6; }
+      100% { transform: translateY(-20vh) rotate(720deg); opacity: 0; }
+    }
+
+    /* === NAV === */
+    nav {
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 500;
+      display: flex;
+      gap: 0.5rem;
+      background: rgba(10,10,10,0.85);
+      border: 2px solid var(--giallo);
+      padding: 0.5rem 1rem;
+      backdrop-filter: blur(10px);
+    }
+    nav a {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.1em;
+      color: var(--bianco);
+      text-decoration: none;
+      padding: 0.2em 0.6em;
+      transition: all 0.2s;
+      position: relative;
+    }
+    nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--giallo);
+      transform: scaleX(0);
+      transition: transform 0.2s;
+    }
+    nav a:hover { color: var(--giallo); }
+    nav a:hover::after { transform: scaleX(1); }
+    nav .nav-buy {
+      background: var(--giallo);
+      color: var(--nero) !important;
+      padding: 0.2em 0.8em;
+      font-weight: 900;
+      animation: buyPulse 1.5s ease-in-out infinite;
+    }
+    nav .nav-buy:hover { background: var(--verde); }
+    @keyframes buyPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255,234,0,0.6); }
+      50% { box-shadow: 0 0 0 8px rgba(255,234,0,0); }
+    }
+
+    /* === TOKEN SECTION === */
+    #token {
+      background: linear-gradient(180deg, var(--nero) 0%, #001200 40%, #0a0a0a 100%);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    #token::before {
+      content: '$$$$$$$$$$$$$$$$$';
+      position: absolute;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 10rem;
+      color: rgba(0,230,118,0.04);
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    #token .section-title { color: var(--giallo); }
+    #token .section-title::before { color: var(--giallo); }
+
+    .token-ticker {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 12vw, 10rem);
+      color: var(--giallo);
+      text-shadow: 4px 4px 0 var(--verde), 0 0 60px rgba(255,234,0,0.4);
+      animation: tickerPop 2s ease-in-out infinite;
+      line-height: 1;
+      margin-bottom: 1rem;
+      position: relative; z-index: 2;
+    }
+    @keyframes tickerPop {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+    }
+
+    .token-tagline {
+      font-family: 'Permanent Marker', cursive;
+      font-size: clamp(1rem, 3vw, 1.8rem);
+      color: var(--arancione);
+      transform: rotate(-1.5deg);
+      margin-bottom: 3rem;
+      position: relative; z-index: 2;
+    }
+
+    .token-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto 3rem;
+      position: relative; z-index: 2;
+    }
+
+    .token-stat {
+      border: 2px solid var(--giallo);
+      padding: 2rem 1.5rem;
+      position: relative;
+      background: linear-gradient(135deg, rgba(255,234,0,0.05), transparent);
+      transition: all 0.3s;
+    }
+    .token-stat:hover {
+      background: linear-gradient(135deg, rgba(255,234,0,0.12), transparent);
+      box-shadow: 0 0 40px rgba(255,234,0,0.15);
+      transform: translateY(-4px);
+    }
+    .token-stat-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+    .token-stat-label {
+      font-family: 'Fredoka One', cursive;
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      color: rgba(255,253,231,0.5);
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+    }
+    .token-stat-value {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      color: var(--giallo);
+      line-height: 1.1;
+    }
+    .token-stat-sub {
+      font-size: 0.85rem;
+      color: rgba(255,253,231,0.5);
+      margin-top: 0.3rem;
+    }
+
+    /* CONTRACT ADDRESS */
+    .contract-box {
+      max-width: 750px;
+      margin: 0 auto 3rem;
+      border: 2px dashed var(--verde);
+      padding: 1.5rem 2rem;
+      position: relative;
+      z-index: 2;
+      background: rgba(0,230,118,0.04);
+    }
+    .contract-label {
+      font-family: 'Fredoka One', cursive;
+      font-size: 0.8rem;
+      letter-spacing: 0.3em;
+      color: var(--verde);
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+    .contract-addr {
+      font-family: 'Courier New', monospace;
+      font-size: clamp(0.65rem, 2vw, 1rem);
+      color: var(--bianco);
+      word-break: break-all;
+      background: rgba(0,0,0,0.4);
+      padding: 0.8rem 1rem;
+      border: 1px solid rgba(0,230,118,0.2);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .contract-addr:hover { border-color: var(--verde); background: rgba(0,230,118,0.08); }
+    .copy-btn {
+      font-family: 'Fredoka One', cursive;
+      font-size: 0.85rem;
+      background: var(--verde);
+      color: var(--nero);
+      border: none;
+      padding: 0.3em 1em;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .copy-btn:hover { background: var(--giallo); }
+    .copy-feedback {
+      font-family: 'Fredoka One', cursive;
+      font-size: 0.8rem;
+      color: var(--verde);
+      margin-top: 0.5rem;
+      min-height: 1.2rem;
+      transition: opacity 0.3s;
+    }
+
+    /* TOKENOMICS DONUT */
+    .tokenomics-wrap {
+      max-width: 800px;
+      margin: 0 auto 3rem;
+      position: relative; z-index: 2;
+    }
+    .tokenomics-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      color: var(--giallo);
+      margin-bottom: 2rem;
+    }
+    .donut-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+    .donut-svg { width: 200px; height: 200px; flex-shrink: 0; }
+    .donut-legend { text-align: left; }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+    .legend-dot {
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .legend-name { font-family: 'Fredoka One', cursive; color: var(--bianco); }
+    .legend-pct {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      margin-left: auto;
+      padding-left: 1rem;
+    }
+
+    /* BUY BUTTONS */
+    .buy-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      position: relative; z-index: 2;
+    }
+    .buy-btn {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.08em;
+      padding: 1rem 2.5rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .buy-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.15);
+      transform: translateX(-100%);
+      transition: transform 0.3s;
+    }
+    .buy-btn:hover::before { transform: translateX(0); }
+    .buy-btn:hover { transform: scale(1.06); }
+    .buy-btn:active { transform: scale(0.98); }
+    .buy-btn.primary { background: var(--giallo); color: var(--nero); box-shadow: 0 0 30px rgba(255,234,0,0.3); }
+    .buy-btn.secondary { background: transparent; color: var(--verde); border: 2px solid var(--verde); }
+    .buy-btn.tertiary { background: transparent; color: #9945FF; border: 2px solid #9945FF; }
+
+    /* === SECTION BASE === */
+    section {
+      padding: 6rem 2rem;
+      position: relative;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 8vw, 7rem);
+      text-align: center;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+    .section-title span {
+      position: relative;
+      z-index: 2;
+    }
+    .section-title::before {
+      content: attr(data-text);
+      position: absolute;
+      top: 6px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+      opacity: 0.2;
+      filter: blur(2px);
+    }
+
+    /* === PERSONAGGI === */
+    #personaggi {
+      background: linear-gradient(180deg, var(--nero) 0%, #050012 50%, var(--nero) 100%);
+    }
+    #personaggi .section-title { color: var(--viola); }
+    #personaggi .section-title::before { color: var(--viola); }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: linear-gradient(135deg, #111 0%, #1a1a2e 100%);
+      border: 2px solid transparent;
+      border-radius: 4px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--accent), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-8px) rotate(1deg);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 30px var(--accent);
+      border-color: var(--accent);
+    }
+    .card:hover::before { opacity: 0.1; }
+
+    .card-emoji {
+      font-size: 5rem;
+      display: block;
+      text-align: center;
+      margin-bottom: 1rem;
+      animation: cardEmoji 3s ease-in-out infinite;
+    }
+    @keyframes cardEmoji {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1) rotate(5deg); }
+    }
+    .card-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      color: var(--accent);
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+    .card-desc {
+      font-size: 1rem;
+      color: rgba(255,253,231,0.7);
+      text-align: center;
+      line-height: 1.5;
+    }
+    .card-tag {
+      display: inline-block;
+      margin-top: 1rem;
+      font-family: 'Fredoka One', cursive;
+      font-size: 0.8rem;
+      padding: 0.2em 0.8em;
+      background: var(--accent);
+      color: var(--nero);
+      border-radius: 2px;
+    }
+
+    /* === MANIFESTO === */
+    #manifesto {
+      background: var(--giallo);
+      color: var(--nero);
+      position: relative;
+      overflow: hidden;
+    }
+    #manifesto::before {
+      content: 'BRAINROT BRAINROT BRAINROT BRAINROT BRAINROT BRAINROT';
+      position: absolute;
+      top: 50%; left: 0;
+      transform: translateY(-50%) rotate(-5deg);
+      white-space: nowrap;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 8rem;
+      opacity: 0.06;
+      pointer-events: none;
+      color: var(--nero);
+    }
+    #manifesto .section-title { color: var(--nero); }
+    #manifesto .section-title::before { color: var(--nero); }
+
+    .manifesto-text {
+      max-width: 800px;
+      margin: 0 auto;
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      line-height: 1.7;
+      position: relative;
+      z-index: 2;
+    }
+    .manifesto-text strong {
+      font-family: 'Permanent Marker', cursive;
+      font-size: 1.4em;
+      color: var(--rosso);
+    }
+    .manifesto-text p { margin-bottom: 1.5rem; }
+
+    .manifesto-rules {
+      list-style: none;
+      margin-top: 2rem;
+    }
+    .manifesto-rules li {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      padding: 0.8rem 1.2rem;
+      background: rgba(0,0,0,0.08);
+      border-left: 5px solid var(--rosso);
+    }
+
+    /* === GLOSSARIO === */
+    #glossario {
+      background: linear-gradient(180deg, var(--nero) 0%, #001a00 50%, var(--nero) 100%);
+    }
+    #glossario .section-title { color: var(--verde); }
+    #glossario .section-title::before { color: var(--verde); }
+
+    .gloss-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .gloss-item {
+      border: 1px solid rgba(0,230,118,0.3);
+      padding: 1.5rem;
+      position: relative;
+      transition: all 0.3s;
+    }
+    .gloss-item::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px; height: 100%;
+      background: var(--verde);
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform 0.3s;
+    }
+    .gloss-item:hover::before { transform: scaleY(1); }
+    .gloss-item:hover { background: rgba(0,230,118,0.05); border-color: var(--verde); }
+    .gloss-word {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      color: var(--verde);
+      margin-bottom: 0.3rem;
+    }
+    .gloss-def {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: rgba(255,253,231,0.8);
+    }
+    .gloss-example {
+      margin-top: 0.5rem;
+      font-family: 'Permanent Marker', cursive;
+      font-size: 0.9rem;
+      color: var(--arancione);
+    }
+
+    /* === SOUND BOARD (fake interactive) === */
+    #soundboard {
+      background: var(--rosso);
+      color: var(--bianco);
+      text-align: center;
+    }
+    #soundboard .section-title { color: var(--bianco); }
+    #soundboard .section-title::before { color: var(--bianco); }
+
+    .sound-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .sound-btn {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      letter-spacing: 0.05em;
+      padding: 1rem 1.8rem;
+      background: var(--nero);
+      color: var(--giallo);
+      border: 3px solid var(--giallo);
+      cursor: pointer;
+      transition: all 0.15s;
+      position: relative;
+      overflow: hidden;
+    }
+    .sound-btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--giallo);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.15s;
+      z-index: 0;
+    }
+    .sound-btn span { position: relative; z-index: 1; }
+    .sound-btn:hover::after { transform: scaleX(1); }
+    .sound-btn:hover { color: var(--nero); }
+    .sound-btn:active { transform: scale(0.95); }
+
+    /* === GENERATOR === */
+    #generatore {
+      background: var(--nero);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #generatore::before {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(213,0,249,0.15) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      pointer-events: none;
+    }
+    #generatore .section-title { color: var(--viola); }
+    #generatore .section-title::before { color: var(--viola); }
+
+    .gen-box {
+      background: linear-gradient(135deg, #111 0%, #1a001a 100%);
+      border: 2px solid var(--viola);
+      padding: 3rem;
+      max-width: 700px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+    .gen-result {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2rem, 6vw, 4rem);
+      color: var(--viola);
+      min-height: 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 1.5rem 0;
+      text-shadow: 0 0 30px rgba(213,0,249,0.5);
+      transition: all 0.3s;
+    }
+    .gen-btn {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.1em;
+      padding: 1rem 3rem;
+      background: var(--viola);
+      color: var(--bianco);
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .gen-btn:hover {
+      background: var(--bianco);
+      color: var(--viola);
+      box-shadow: 0 0 40px rgba(213,0,249,0.6);
+      transform: scale(1.05);
+    }
+    .gen-btn:active { transform: scale(0.98); }
+
+    .gen-sub {
+      margin-top: 1rem;
+      color: rgba(255,253,231,0.5);
+      font-size: 0.9rem;
+    }
+
+    /* === FOOTER === */
+    footer {
+      background: var(--nero);
+      border-top: 3px solid var(--giallo);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    .footer-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      color: var(--giallo);
+      margin-bottom: 1rem;
+    }
+    .footer-sub {
+      color: rgba(255,253,231,0.4);
+      font-size: 0.9rem;
+    }
+    .footer-flag {
+      display: inline-flex;
+      gap: 0.3rem;
+      font-size: 2rem;
+      margin: 1rem 0;
+    }
+    .scroll-top {
+      display: inline-block;
+      margin-top: 1.5rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.2em;
+      color: var(--verde);
+      text-decoration: none;
+      border-bottom: 1px dashed var(--verde);
+      transition: color 0.2s;
+    }
+    .scroll-top:hover { color: var(--giallo); border-color: var(--giallo); }
+
+    /* === MARQUEE === */
+    .marquee-wrap {
+      overflow: hidden;
+      background: var(--giallo);
+      padding: 0.8rem 0;
+      border-top: 3px solid var(--nero);
+      border-bottom: 3px solid var(--nero);
+    }
+    .marquee-inner {
+      display: flex;
+      gap: 3rem;
+      white-space: nowrap;
+      animation: marquee 20s linear infinite;
+    }
+    .marquee-inner span {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      color: var(--nero);
+      flex-shrink: 0;
+    }
+    .marquee-inner span.dot {
+      color: var(--rosso);
+      font-size: 1rem;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* === RESPONSIVE === */
+    @media (max-width: 600px) {
+      nav { display: none; }
+      .gen-box { padding: 1.5rem; }
+    }
+
+    /* === FADE IN ON SCROLL === */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="flag-bar"></div>
+
+  <nav>
+    <a href="#hero">🏠</a>
+    <a href="#token">$ITALIANROT</a>
+    <a href="#personaggi">Personaggi</a>
+    <a href="#manifesto">Manifesto</a>
+    <a href="#glossario">Glossario</a>
+    <a href="#generatore">Generatore</a>
+    <a href="https://pump.fun" target="_blank" class="nav-buy">🚀 BUY</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-badge">☆ Il Portale Ufficiale Del Caos Culturale ☆</div>
+    <h1 class="hero-title">
+      <span class="italian">ITALIAN</span>
+      <span class="brainrot">BRAINROT</span>
+    </h1>
+    <p class="hero-sub">"Tralalero Tralala ci aspetta tutti" 🐟🐊🦏</p>
+    <div style="margin-top:2rem; position:relative; z-index:2; display:flex; gap:1rem; flex-wrap:wrap; justify-content:center;">
+      <a href="https://pump.fun/coin/BQX1cjcRHXmrqNtoFWwmE5bZj7RPneTmqXB979b2pump" target="_blank" class="buy-btn primary">🚀 BUY $ITALIANROT</a>
+      <a href="#token" class="buy-btn secondary">📊 TOKENOMICS</a>
+    </div>
+    <div class="hero-scroll">↓</div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-inner">
+      <span>BOMBARDIRO CROCODILO</span><span class="dot">★</span>
+      <span>TRALALERO TRALALA</span><span class="dot">★</span>
+      <span>BRR BRR PATAPIM</span><span class="dot">★</span>
+      <span>TUNG TUNG TUNG SAHUR</span><span class="dot">★</span>
+      <span>CAPPUCCINO ASSASSINO</span><span class="dot">★</span>
+      <span>LIRILÌ LARILÀ</span><span class="dot">★</span>
+      <span>FRIGO CAMELO</span><span class="dot">★</span>
+      <span>TRIPPI TROPPI</span><span class="dot">★</span>
+      <!-- repeat for seamless -->
+      <span>BOMBARDIRO CROCODILO</span><span class="dot">★</span>
+      <span>TRALALERO TRALALA</span><span class="dot">★</span>
+      <span>BRR BRR PATAPIM</span><span class="dot">★</span>
+      <span>TUNG TUNG TUNG SAHUR</span><span class="dot">★</span>
+      <span>CAPPUCCINO ASSASSINO</span><span class="dot">★</span>
+      <span>LIRILÌ LARILÀ</span><span class="dot">★</span>
+      <span>FRIGO CAMELO</span><span class="dot">★</span>
+      <span>TRIPPI TROPPI</span><span class="dot">★</span>
+    </div>
+  </div>
+
+  <!-- TOKEN -->
+  <section id="token">
+    <h2 class="section-title" data-text="$ITALIANROT"><span>$ITALIANROT</span></h2>
+
+    <div class="token-ticker reveal">$ITALIANROT</div>
+    <div class="token-tagline reveal">La prima memecoin del Brainrot Italiano sulla blockchain di Solana 🇮🇹⚡</div>
+
+    <!-- STATS -->
+    <div class="token-grid">
+      <div class="token-stat reveal">
+        <div class="token-stat-icon">🪙</div>
+        <div class="token-stat-label">Token</div>
+        <div class="token-stat-value">$ITALIANROT</div>
+        <div class="token-stat-sub">Il ticker del caos</div>
+      </div>
+      <div class="token-stat reveal">
+        <div class="token-stat-icon">💎</div>
+        <div class="token-stat-label">Supply Totale</div>
+        <div class="token-stat-value">1,000,000,000</div>
+        <div class="token-stat-sub">1 Miliardo — tutto in circolazione</div>
+      </div>
+      <div class="token-stat reveal">
+        <div class="token-stat-icon">🔥</div>
+        <div class="token-stat-label">Tax</div>
+        <div class="token-stat-value">0 / 0</div>
+        <div class="token-stat-sub">Zero tasse. Tipo Bombardiro.</div>
+      </div>
+      <div class="token-stat reveal">
+        <div class="token-stat-icon">⛓️</div>
+        <div class="token-stat-label">Blockchain</div>
+        <div class="token-stat-value">SOLANA</div>
+        <div class="token-stat-sub">Veloce come Tralalero in fuga</div>
+      </div>
+    </div>
+
+    <!-- CONTRACT -->
+    <div class="contract-box reveal">
+      <div class="contract-label">📋 Contract Address</div>
+      <div class="contract-addr" onclick="copyCA()">
+        <span id="caText">BQX1cjcRHXmrqNtoFWwmE5bZj7RPneTmqXB979b2pump</span>
+        <button class="copy-btn" onclick="event.stopPropagation(); copyCA()">📋 COPIA</button>
+      </div>
+      <div class="copy-feedback" id="copyFeedback"></div>
+    </div>
+
+    <!-- TOKENOMICS DONUT -->
+    <div class="tokenomics-wrap reveal">
+      <div class="tokenomics-title">TOKENOMICS</div>
+      <div class="donut-container">
+        <svg class="donut-svg" viewBox="0 0 100 100">
+          <!-- 100% circulante — un solo arco de colores -->
+          <circle cx="50" cy="50" r="35" fill="none" stroke="#1a1a1a" stroke-width="18"/>
+          <!-- Circulante: 100% rainbow -->
+          <circle cx="50" cy="50" r="35" fill="none"
+            stroke="url(#donutGrad)" stroke-width="18"
+            stroke-dasharray="219.9 0"
+            stroke-linecap="butt"
+            transform="rotate(-90 50 50)"/>
+          <defs>
+            <linearGradient id="donutGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#00e676"/>
+              <stop offset="33%" stop-color="#ffea00"/>
+              <stop offset="66%" stop-color="#ff6d00"/>
+              <stop offset="100%" stop-color="#ff1744"/>
+            </linearGradient>
+          </defs>
+          <!-- Center text -->
+          <text x="50" y="46" text-anchor="middle" font-family="Bebas Neue" font-size="14" fill="#ffea00">100%</text>
+          <text x="50" y="58" text-anchor="middle" font-family="Boogaloo" font-size="7" fill="rgba(255,253,231,0.6)">CIRCULANTE</text>
+        </svg>
+        <div class="donut-legend">
+          <div class="legend-item">
+            <div class="legend-dot" style="background: linear-gradient(90deg, #00e676, #ffea00, #ff6d00, #ff1744);"></div>
+            <div>
+              <div class="legend-name">Supply Circulante</div>
+              <div style="font-size:0.8rem; color:rgba(255,253,231,0.5);">1,000,000,000 $ITALIANROT</div>
+            </div>
+            <div class="legend-pct" style="color: var(--giallo);">100%</div>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background: #333;"></div>
+            <div>
+              <div class="legend-name">Dev / Team</div>
+              <div style="font-size:0.8rem; color:rgba(255,253,231,0.5);">Nessuna riserva</div>
+            </div>
+            <div class="legend-pct" style="color: rgba(255,253,231,0.4);">0%</div>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background: #333;"></div>
+            <div>
+              <div class="legend-name">Marketing / CEX</div>
+              <div style="font-size:0.8rem; color:rgba(255,253,231,0.5);">Fair launch puro</div>
+            </div>
+            <div class="legend-pct" style="color: rgba(255,253,231,0.4);">0%</div>
+          </div>
+          <div style="margin-top:1.5rem; padding:1rem; border:1px solid rgba(0,230,118,0.3); font-size:0.9rem; color:rgba(255,253,231,0.7);">
+            ✅ <strong style="color:var(--verde)">Fair Launch</strong> su pump.fun<br>
+            ✅ <strong style="color:var(--verde)">Liquidity Burned</strong><br>
+            ✅ <strong style="color:var(--verde)">No Mint Authority</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUY BUTTONS -->
+    <div class="buy-buttons reveal">
+      <a href="https://pump.fun/coin/BQX1cjcRHXmrqNtoFWwmE5bZj7RPneTmqXB979b2pump" target="_blank" class="buy-btn primary">🚀 COMPRA SU PUMP.FUN</a>
+      <a href="https://raydium.io/swap/" target="_blank" class="buy-btn tertiary">⚡ RAYDIUM</a>
+      <a href="https://dexscreener.com/solana/BQX1cjcRHXmrqNtoFWwmE5bZj7RPneTmqXB979b2pump" target="_blank" class="buy-btn secondary">📈 DEXSCREENER</a>
+    </div>
+
+  </section>
+
+  <!-- PERSONAGGI -->
+  <section id="personaggi">
+    <h2 class="section-title" data-text="PERSONAGGI"><span>PERSONAGGI</span></h2>
+    <div class="cards-grid">
+
+      <div class="card reveal" style="--accent: #ff1744;">
+        <span class="card-emoji">🐊✈️</span>
+        <div class="card-name">Bombardiro Crocodilo</div>
+        <div class="card-desc">Un coccodrillo-bomba che vola. Nemico giurato del senso logico. Esperto in distruzione sopraelevata.</div>
+        <span class="card-tag">🔥 ICONA</span>
+      </div>
+
+      <div class="card reveal" style="--accent: #2979ff;">
+        <span class="card-emoji">🐟🎶</span>
+        <div class="card-name">Tralalero Tralala</div>
+        <div class="card-desc">Il pesce con le scarpe da ginnastica. Canta. Non si sa perché. Non serve saperlo.</div>
+        <span class="card-tag">🎵 ORIGINALE</span>
+      </div>
+
+      <div class="card reveal" style="--accent: #ffea00;">
+        <span class="card-emoji">🦏💥</span>
+        <div class="card-name">Brr Brr Patapim</div>
+        <div class="card-desc">Rinoceronte di dubbia provenienza. Fa il suono che fa il suo nome. Incomprensibile e amato.</div>
+        <span class="card-tag">🌀 CAOS</span>
+      </div>
+
+      <div class="card reveal" style="--accent: #00e676;">
+        <span class="card-emoji">🥁🌙</span>
+        <div class="card-name">Tung Tung Tung Sahur</div>
+        <div class="card-desc">Battitore di tamburi della notte. Si manifesta alle 3 di mattina. Pluripremiato per disturbo del sonno.</div>
+        <span class="card-tag">🌙 NOTTURNO</span>
+      </div>
+
+      <div class="card reveal" style="--accent: #ff6d00;">
+        <span class="card-emoji">☕🗡️</span>
+        <div class="card-name">Cappuccino Assassino</div>
+        <div class="card-desc">Bevanda italiana letale. Ogni sorso è un enigma. Consigliato da nessun nutrizionista.</div>
+        <span class="card-tag">☕ PERICOLOSO</span>
+      </div>
+
+      <div class="card reveal" style="--accent: #d500f9;">
+        <span class="card-emoji">🦒🌺</span>
+        <div class="card-name">Lirilì Larilà</div>
+        <div class="card-desc">Una giraffa canora. Il suo canto cura o danneggia il cervello. I medici non sono d'accordo.</div>
+        <span class="card-tag">🌺 MUSICALE</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MANIFESTO -->
+  <section id="manifesto">
+    <h2 class="section-title" data-text="MANIFESTO"><span>IL MANIFESTO</span></h2>
+    <div class="manifesto-text reveal">
+      <p>Il <strong>Brainrot Italiano</strong> non è solo un meme. È un movimento. È la risposta dell'umanità stanca di cose che hanno senso.</p>
+      <p>Da qualche parte su internet, qualcuno ha deciso che un <strong>coccodrillo con le ali</strong> era esattamente ciò di cui il mondo aveva bisogno. Aveva ragione.</p>
+      <p>Noi crediamo nel diritto fondamentale di ogni essere umano di <strong>non capire cosa sta guardando</strong> e ridere lo stesso. Anzi, ridere <em>proprio per questo</em>.</p>
+      <ul class="manifesto-rules">
+        <li>🏛️ La logica è optional. La risata è obbligatoria.</li>
+        <li>🐊 Ogni animale può essere qualsiasi altra cosa.</li>
+        <li>🎵 Se ripeti una parola abbastanza volte, diventa vera.</li>
+        <li>🇮🇹 Mettere "ino", "one" o "atore" alla fine di qualsiasi parola la rende italiana.</li>
+        <li>🧠 Il cervello si mangia da solo. Va bene così.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- GLOSSARIO -->
+  <section id="glossario">
+    <h2 class="section-title" data-text="GLOSSARIO"><span>GLOSSARIO</span></h2>
+    <div class="gloss-grid">
+
+      <div class="gloss-item reveal">
+        <div class="gloss-word">BRAINROT</div>
+        <div class="gloss-def">Fenomeno cognitivo per cui l'esposizione prolungata a contenuti assurdi rende impossibile apprezzare contenuti normali.</div>
+        <div class="gloss-example">"Scusa non ho capito la riunione, ho il brainrot"</div>
+      </div>
+
+      <div class="gloss-item reveal">
+        <div class="gloss-word">ITALIAN BRAINROT</div>
+        <div class="gloss-def">Sottogenere specifico in cui creature ibride con nomi italiani pseudo-assurdi dominano il piano cognitivo dell'utente.</div>
+        <div class="gloss-example">"Ho sognato Tralalero. Italian brainrot confirmed."</div>
+      </div>
+
+      <div class="gloss-item reveal">
+        <div class="gloss-word">PHONK ITALIANO</div>
+        <div class="gloss-def">Musica di accompagnamento tipica. Può essere qualsiasi cosa. Non deve avere senso. Meglio se distorta.</div>
+        <div class="gloss-example">"Quello era phonk italiano? O una serenata?"</div>
+      </div>
+
+      <div class="gloss-item reveal">
+        <div class="gloss-word">IBRIDAZIONE BESTIALE</div>
+        <div class="gloss-def">Tecnica creativa di fusione di animali con oggetti inanimati, veicoli, o altri animali. Non esistono limiti.</div>
+        <div class="gloss-example">"Coccodrillo + aereo = ovvio"</div>
+      </div>
+
+      <div class="gloss-item reveal">
+        <div class="gloss-word">NOME RITUALICO</div>
+        <div class="gloss-def">Il nome del personaggio che, pronunciato ad alta voce, attiva la risposta emotiva desiderata. Di solito nonsense poetico.</div>
+        <div class="gloss-example">"Brrr Brrr Patapim" — efficace al 100%</div>
+      </div>
+
+      <div class="gloss-item reveal">
+        <div class="gloss-word">LORE</div>
+        <div class="gloss-def">La mitologia condivisa di tutti i personaggi. Inventata collettivamente. Canonica perché qualcuno lo ha detto.</div>
+        <div class="gloss-example">"Sì ma secondo la lore, Bombardiro odia il lunedì"</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SOUNDBOARD FAKE -->
+  <section id="soundboard">
+    <h2 class="section-title" data-text="SOUNDBOARD"><span>SOUNDBOARD</span></h2>
+    <p style="margin-bottom:2rem; opacity:0.8; font-size:1.1rem;">Premi i bottoni. Immagina il suono. È più potente così.</p>
+    <div class="sound-grid">
+      <button class="sound-btn" onclick="playSound(this)"><span>🐊 BOMBARDIRO</span></button>
+      <button class="sound-btn" onclick="playSound(this)"><span>🐟 TRALALERO</span></button>
+      <button class="sound-btn" onclick="playSound(this)"><span>🦏 PATAPIM</span></button>
+      <button class="sound-btn" onclick="playSound(this)"><span>🥁 TUNG TUNG</span></button>
+      <button class="sound-btn" onclick="playSound(this)"><span>☕ CAPPUCCINO</span></button>
+      <button class="sound-btn" onclick="playSound(this)"><span>🦒 LIRILÌ</span></button>
+      <button class="sound-btn" onclick="playSound(this)"><span>❓ ???</span></button>
+      <button class="sound-btn" onclick="playSound(this)"><span>🌀 CHAOS MODE</span></button>
+    </div>
+  </section>
+
+  <!-- GENERATORE -->
+  <section id="generatore">
+    <h2 class="section-title" data-text="GENERATORE"><span>GENERATORE</span></h2>
+    <div class="gen-box reveal">
+      <p style="color: rgba(255,253,231,0.7); margin-bottom:1rem;">Premi il bottone. Ricevi il tuo personaggio.</p>
+      <div class="gen-result" id="genResult">???</div>
+      <button class="gen-btn" onclick="generateCharacter()">⚡ GENERA PERSONAGGIO ⚡</button>
+      <p class="gen-sub">⚠️ Attenzione: potrebbe causare brainrot irreversibile</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-title">$ITALIANROT</div>
+    <div class="footer-flag">🇮🇹</div>
+    <div style="margin: 1rem 0; display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+      <a href="https://pump.fun/coin/BQX1cjcRHXmrqNtoFWwmE5bZj7RPneTmqXB979b2pump" target="_blank" class="buy-btn primary" style="font-size:1rem; padding:0.7rem 1.8rem;">🚀 PUMP.FUN</a>
+      <a href="https://dexscreener.com/solana/BQX1cjcRHXmrqNtoFWwmE5bZj7RPneTmqXB979b2pump" target="_blank" class="buy-btn secondary" style="font-size:1rem; padding:0.7rem 1.8rem;">📈 CHART</a>
+    </div>
+    <p class="footer-sub" style="max-width:600px; margin: 0 auto;">
+      CA: <span style="font-family:monospace; color:var(--verde); font-size:0.75rem; word-break:break-all;">BQX1cjcRHXmrqNtoFWwmE5bZj7RPneTmqXB979b2pump</span>
+    </p>
+    <br>
+    <p class="footer-sub" style="font-size:0.75rem; opacity:0.4; max-width:600px; margin:0 auto;">$ITALIANROT è una memecoin a scopo puramente di intrattenimento. Non costituisce consiglio finanziario. DYOR. Il Brainrot non si assume responsabilità per nessun danno cerebrale causato da Bombardiro Crocodilo.</p>
+    <br>
+    <a href="#hero" class="scroll-top">↑ TORNA SU ↑</a>
+  </footer>
+
+  <script>
+    // === COPY CONTRACT ADDRESS ===
+    function copyCA() {
+      const ca = 'BQX1cjcRHXmrqNtoFWwmE5bZj7RPneTmqXB979b2pump';
+      navigator.clipboard.writeText(ca).then(() => {
+        const fb = document.getElementById('copyFeedback');
+        fb.textContent = '✅ Copiato! Ora vai a comprare su pump.fun 🚀';
+        fb.style.opacity = '1';
+        setTimeout(() => { fb.style.opacity = '0'; }, 3000);
+      });
+    }
+
+    // === FLOATING EMOJIS ===
+    const emojis = ['🐊','🐟','🦏','🥁','☕','🦒','🇮🇹','⚡','🎵','🌀','💥','🐸','🦆','🎺'];
+    function spawnFloater() {
+      const el = document.createElement('div');
+      el.className = 'floater';
+      el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      el.style.left = Math.random() * 100 + 'vw';
+      el.style.fontSize = (2 + Math.random() * 3) + 'rem';
+      const dur = 8 + Math.random() * 10;
+      el.style.animationDuration = dur + 's';
+      el.style.animationDelay = '0s';
+      document.querySelector('.hero').appendChild(el);
+      setTimeout(() => el.remove(), dur * 1000);
+    }
+    setInterval(spawnFloater, 1200);
+
+    // === SCROLL REVEAL ===
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // === SOUND BOARD (visual feedback) ===
+    function playSound(btn) {
+      btn.style.transform = 'scale(0.9)';
+      btn.style.background = '#ffea00';
+      btn.style.color = '#0a0a0a';
+      setTimeout(() => {
+        btn.style.transform = '';
+        btn.style.background = '';
+        btn.style.color = '';
+      }, 300);
+      // Spawn an emoji burst
+      const emojiBurst = ['💥','⚡','🎵','✨','🌀','🔥'];
+      const burst = document.createElement('span');
+      burst.textContent = emojiBurst[Math.floor(Math.random() * emojiBurst.length)];
+      burst.style.cssText = `
+        position: fixed;
+        font-size: 3rem;
+        pointer-events: none;
+        z-index: 9998;
+        animation: burstAnim 0.8s forwards;
+        left: ${btn.getBoundingClientRect().left + btn.offsetWidth/2}px;
+        top: ${btn.getBoundingClientRect().top}px;
+      `;
+      document.body.appendChild(burst);
+      setTimeout(() => burst.remove(), 800);
+    }
+
+    // Add burst keyframe dynamically
+    const style = document.createElement('style');
+    style.textContent = `@keyframes burstAnim {
+      0% { transform: translate(-50%, 0) scale(0.5); opacity: 1; }
+      100% { transform: translate(-50%, -100px) scale(2); opacity: 0; }
+    }`;
+    document.head.appendChild(style);
+
+    // === GENERATOR ===
+    const prefixes = ['Bombardiro','Tralalero','Patapim','Cappuccino','Frigo','Trippi','Biscotto','Macaroni','Spaghetti','Cannolo','Gelato','Torpedo','Fragolino','Velocipede','Bambino'];
+    const animals = ['Crocodilo','Tralala','Elefantino','Assassino','Camelo','Troppi','Ornitorino','Squalo','Gattino','Pitone','Pavone','Fenicottero','Rinoceronte','Pesce','Granchio'];
+    const suffixes = ['Volante','Canzone','Esplosivo','Misterioso','Ballerino','Silenzioso','Furioso','Melanconico','Filosofico','Irascibile','Danzante','Catatonico'];
+
+    function generateCharacter() {
+      const result = document.getElementById('genResult');
+      result.style.opacity = '0';
+      result.style.transform = 'scale(0.8)';
+      setTimeout(() => {
+        const name = prefixes[Math.floor(Math.random()*prefixes.length)] + ' ' +
+                     animals[Math.floor(Math.random()*animals.length)] + ' ' +
+                     suffixes[Math.floor(Math.random()*suffixes.length)];
+        result.textContent = name;
+        result.style.opacity = '1';
+        result.style.transform = 'scale(1)';
+      }, 300);
+    }
+    // Generate one on load
+    generateCharacter();
+  </script>
+</body>
+</html>
